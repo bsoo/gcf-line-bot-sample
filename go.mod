@@ -1,4 +1,4 @@
-module github.com/bsoo/line-bot
+module github.com/bsoo/gcf-line-bot-sample
 
 go 1.11
 

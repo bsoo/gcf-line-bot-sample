@@ -7,14 +7,14 @@ init:
 	@cp secrets.template.json secrets.json
 
 deploy:
-	@gcloud functions deploy sample-line-bot-webhook
+	@gcloud functions deploy gcf-line-bot-sample --trigger-http --runtime=go111
 deploy-all:
-	@gcloud functions deploy sample-line-bot-webhook \
+	@gcloud functions deploy gcf-line-bot-sample \
 		--memory=256MB \
 		--runtime=go111 \
 		--trigger-http \
-		--set-env-vars="GCP_PROJECT_ID"="$(GCP_PROJECT_ID)","KMS_KEY_RING_NAME"="$(KMS_KEY_RING_NAME)","KMS_LINE_SECRETS_KEY_NAME"="$(KMS_LINE_SECRETS_KEY_NAME)" \
-		--entry-point=Webhook
+		--entry-point=Webhook \
+		--set-env-vars="GCP_PROJECT_ID"="$(GCP_PROJECT_ID)","KMS_KEY_RING_NAME"="$(KMS_KEY_RING_NAME)","KMS_LINE_SECRETS_KEY_NAME"="$(KMS_LINE_SECRETS_KEY_NAME)"
 
 decrypt-secrets:
 	@gcloud kms decrypt $(KMSKEYFLAGS)
